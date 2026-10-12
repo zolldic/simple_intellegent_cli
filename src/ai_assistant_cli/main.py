@@ -42,4 +42,4 @@ def main() -> None:
         print(args)
 
 def is_interactive():
-    return hasattr(sys, 'ps1') or bool(sys.flags.interactive)
+    return sys.stdin.isatty()
