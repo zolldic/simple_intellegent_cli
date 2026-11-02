@@ -14,6 +14,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="A simple ai assistant")
 
+    command = parser.add_argument("prompt", nargs="?", type=str, help="prompt to the LLM")
     # change the system prompt, 
     parser.add_argument('--system', action='store', nargs=1)
     # extract structured data, effect the response of the model.
@@ -39,7 +40,12 @@ def main() -> None:
             messages.append({"role": "assistant", "content": reply})
             storage.save(messages)
     else:
-        print(args)
+        reply = client.send_message(args.prompt)
+        print(reply)
+
+        return
+
+
 
 def is_interactive():
     return sys.stdin.isatty()
