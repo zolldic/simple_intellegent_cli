@@ -10,13 +10,14 @@ class Storage:
         self._dir: Path  = Path('./data')
         self._dir.mkdir(parents=True, exist_ok=True)
 
-    def init_storage(self) -> None:
+    def init_storage(self) -> Path:
         full_path: Path = self._dir / self._path
         if not full_path.exists():
             with open(full_path, 'w', encoding='utf-8') as fd:
                 json.dump([
                     {"role": "system", "content": "You are a helpfull assistant"}
                 ], fd, indent=4)
+        return full_path
 
     def load(self, storage_path: str ='history.json') -> List[dict]:
         path: Path = self._dir / storage_path

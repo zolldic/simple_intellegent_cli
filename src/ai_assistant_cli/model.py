@@ -1,6 +1,7 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+from .types import Invoice
 
 load_dotenv()
 
@@ -21,4 +22,13 @@ class Client:
         )
 
         return response.output_text
+
+    def structured_output(self, prompt):
+        response = self._client.responses.parse(
+            model=self._model,
+            input=prompt,
+            text_format=Invoice
+        )
+
+        return response.output_parsed
 
